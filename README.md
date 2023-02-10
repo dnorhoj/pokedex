@@ -1,5 +1,7 @@
 # Pokedex
 
+**Hjemmesiden er hostet på [https://pokedex.dnorhoj.me/](https://pokedex.dnorhoj.me/)**
+
 Kildekode til Pokedex opgaven i programmering.
 
 ## Struktur
