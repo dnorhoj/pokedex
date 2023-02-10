@@ -1,0 +1,83 @@
+<div class="grid gap-3 lg:grid-cols-3 mt-3">
+  <div *ngFor="let pokemon of pokemonList" class="card card-side bg-base-200 shadow-lg">
+    <figure class="px-5">
+      <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{pokemon.id}}.png" class="w-20" alt="pokemon" />
+    </figure>
+    <div class="card-body">
+      <div class="flex justify-between">
+        <h2 class="card-title">{{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1).replace("-", " ", "g") }}
+        </h2>
+
+        <div>
+          <div *ngFor="let type of pokemon.types" class="badge badge-secondary">
+            {{ type.type.name.toUpperCase() }}
+          </div>
+        </div>
+      </div>
+
+      <p>{{ pokemon.url }}</p>
+      <div class="card-actions justify-end">
+        <label for="pokemodal-{{pokemon.id}}" class="btn btn-outline">Info</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal; delen som har stats osv -->
+<div *ngFor="let pokemon of pokemonList">
+  <input type="checkbox" id="pokemodal-{{pokemon.id}}" class="modal-toggle" />
+  <label for="pokemodal-{{pokemon.id}}" class="modal cursor-pointer">
+    <label class="modal-box relative" for="">
+      <div class="flex justify-between">
+        <h3 class="text-2xl font-bold">
+          {{ pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1).replace("-", " ", "g") }}
+        </h3>
+        <h4 class="text-sm font-bold">
+          #{{ pokemon.id }}
+        </h4>
+      </div>
+
+      <div class="flex justify-around items-center">
+        <div class="stats stats-vertical lg:stats-horizontal shadow-xl bg-base-200 mx-auto my-4">
+          <div class="stat">
+            <div class="stat-title">Height</div>
+            <div class="stat-value">{{pokemon.height / 10}} m</div>
+          </div>
+          <div class="stat">
+            <div class="stat-title">Weight</div>
+            <div class="stat-value">{{pokemon.weight / 10}} kg</div>
+          </div>
+        </div>
+
+        <figure class="px-5">
+          <img [src]="pokemon.sprites.front_default" alt="pokemon" />
+        </figure>
+      </div>
+
+      <!-- <ul class="py-4">
+        <li *ngFor="let stat of pokemon.stats">
+          {{ stat.stat.name }}: {{ stat.base_stat }}
+        </li>
+      </ul> -->
+
+      <h2 class="text-lg font-bold">Stats</h2>
+      <div class="gap-3 lg:grid-cols-2 mt-3">
+        <div *ngFor="let stat of pokemon.stats" class="badge badge-outline m-1">
+          <p><b>{{ stat.stat.name.toUpperCase().replace("-", " ", "g") }}</b>: {{ stat.base_stat }}</p>
+        </div>
+      </div>
+
+      <h2 class="text-lg font-bold mt-3">Abilities</h2>
+      <div class="gap-3 lg:grid-cols-2 mt-3">
+        <div *ngFor="let ability of pokemon.abilities" class="badge badge-outline m-1">
+          <p><b>{{ ability.ability.name.toUpperCase().replace("-", " ", "g") }}</b></p>
+        </div>
+      </div>
+
+      <div class="card-actions justify-end mt-3">
+        <label for="pokemodal-{{pokemon.id}}" class="btn btn-outline">Close</label>
+        <button class="btn btn-error" (click)="delete(pokemon.id)">Delete</button>
+      </div>
+    </label>
+  </label>
+</div>

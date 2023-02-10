@@ -1,0 +1,52 @@
+<div class="navbar bg-base-300">
+  <div class="navbar-start">
+    <a class="btn btn-ghost normal-case text-xl">Pokédex</a>
+  </div>
+  <div class="navbar-center" *ngIf="usersService.currentUser">
+    <ul class="menu menu-horizontal px-1">
+      <li>
+        <a (click)="page = 0" class="btn btn-ghost normal-case">My Pokémons</a>
+      </li>
+      <li>
+        <a (click)="page = 1" class="btn btn-ghost normal-case">Battle</a>
+      </li>
+    </ul>
+  </div>
+  <div class="navbar-end" *ngIf="usersService.currentUser">
+    <span class="px-3">Logged in as: <b>{{ usersService.currentUser.username }}</b></span>
+    <ul class="menu menu-horizontal px-1">
+      <li>
+        <a (click)="usersService.logout()" class="btn btn-outline btn-error">Logout</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Bliver vist når bruger ikke er logget ind -->
+<div class="dark:bg-base-200 text-center py-10" *ngIf="!usersService.currentUser">
+  <h1 class="text-5xl font-bold">Welcome!</h1>
+  <h2 class="text-2xl">Log in or register to get your PokéDex started!</h2>
+
+  <app-auth />
+</div>
+
+<!-- Views -->
+<div *ngIf="usersService.currentUser">
+  <div *ngIf="page === 0">
+    <div class="dark:bg-base-200 text-center py-10">
+      <h1 class="text-5xl font-bold">Your pokemons</h1>
+      <h2 class="text-2xl">Catch some pokemons and add them to your PokéDex!</h2>
+
+      <app-catch-pokemon />
+    </div>
+
+    <div class="container mx-auto mt-3">
+      <h2 class="text-2xl font-bold">My Pokémons</h2>
+      <app-pokemon-list />
+    </div>
+  </div>
+
+  <div *ngIf="page === 1">
+    <app-battle />
+  </div>
+</div>

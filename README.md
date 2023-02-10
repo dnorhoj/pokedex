@@ -1,27 +1,34 @@
 # Pokedex
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.3.
+Kildekode til Pokedex opgaven i programmering.
 
-## Development server
+## Struktur
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+I mappen `src` ligger koden til opgaven. Her er det delt op i 3 mapper:
 
-## Code scaffolding
+* `battle` - Koden til "battle" siden
+  * Her er kun et komponent som styrer hele siden
+* `my-pokemon` - Koden til "my pokemon" siden
+  * Her har jeg lavet et komponent til hver af de forskellige dele af siden:
+    * `catch-pokemon` - Komponentet der styrer at fange pokemon
+    * `pokemon-list` - Komponentet der styrer at vise listen af pokemon i bunden
+* `start` - Koden til "start" siden
+  * Her har jeg selve startsiden og "auth" komponentet som styrer login og logout
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Persistering
 
-## Build
+Jeg har valgt at bruge `localStorage` til at persitere data. Det er en simpel måde at gemme data i browseren, som er nem at bruge. Jeg har valgt at gemme dataen som JSON, da det er nemt at gemme og hente igen.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Services
 
-## Running unit tests
+Jeg gør brug af 2 services i opgaven:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* `pokeapi` - Service der håndterer at hente pokemon fra PokeAPI
+* `users` - Service der håndterer at hente brugere fra localstorage.
 
-## Running end-to-end tests
+## Holdning til Angular
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Projektet har givet mig en dybere forståelse af Angular. Det skal dog ikke være nogen hemmelighed at jeg ikke er den største fan af Angular.
 
-## Further help
+Jeg synes også at Angular er meget tungt og kræver meget kode for at få lavet noget simpelt. For eksempel synes jeg at det har været meget besværligere end det behøves at subscribe til opdateringer i data. Her har jeg brugt `RxJS` som er et tredjepartsbibliotek som sørger for at gøre det nemmere at håndtere asynkronitet.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

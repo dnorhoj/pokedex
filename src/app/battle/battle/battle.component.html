@@ -1,0 +1,80 @@
+<div *ngIf="!pokemonList.length" class="container mx-auto">
+  <div class="alert alert-error mt-3">
+    You have no pokemon. Please go to "My pokemon" and catch some.
+  </div>
+</div>
+
+<div class="container mt-3 mx-auto" *ngIf="pokemonList.length">
+  <!-- Two pokemon (cards) facing off (flexbox) -->
+  <div class="flex justify-between items-stretch" *ngIf="selectedPokemon">
+    <div class="card bg-base-200">
+      <div class="card-body">
+        <figure class="avatar">
+          <img
+            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{selectedPokemon.pokemon.id}}.png"
+            alt="">
+        </figure>
+
+        <div class="flex space-x-1">
+          <span class="badge badge-outline">Attack: {{selectedPokemon.attack}}</span>
+          <span class="badge badge-outline">Defense: {{selectedPokemon.defense}}</span>
+        </div>
+
+        <div class="flex justify-between items-center gap-2">
+          <progress class="progress progress-error" [value]="selectedPokemon.hp"
+            [max]="selectedPokemon.maxHp"></progress>
+          <span class="text-lg font-bold">{{selectedPokemon.hp}}/{{selectedPokemon.maxHp}}</span>
+        </div>
+
+        <span *ngIf="battleStarted && !battleOver"
+          class="text-2xl font-bold text-center">{{selectedPokemon.pokemon.name}}</span>
+
+        <div *ngIf="!battleStarted || battleOver" class="flex justify-between space-x-2">
+          <select class="select select-bordered flex-grow" (change)="onChangePokemon($event)">
+            <option *ngFor="let pokemon of pokemonList" [value]="pokemon.id">
+              {{pokemon.name}}
+            </option>
+          </select>
+          <button class="btn btn-success" (click)="startBattle()">Select pokemon</button>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col justify-around items-center">
+      <span class="text-5xl font-bold text-center">VS</span>
+      <div *ngIf="battleStarted && !battleOver" class="flex flex-col w-40 gap-2">
+        <button class="btn btn-primary" (click)="attack()">Attack</button>
+        <button class="btn btn-primary" (click)="heal()">Heal</button>
+      </div>
+    </div>
+
+    <div class="card bg-base-200" *ngIf="opponentPokemon">
+      <div class="card-body">
+        <figure class="avatar">
+          <img
+            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{opponentPokemon.pokemon.id}}.png"
+            alt="">
+        </figure>
+        <div class="flex space-x-1">
+          <span class="badge badge-outline">Attack: {{opponentPokemon.attack}}</span>
+          <span class="badge badge-outline">Defense: {{opponentPokemon.defense}}</span>
+        </div>
+        <div class="flex justify-between items-center gap-2">
+          <progress class="progress progress-error" [value]="opponentPokemon.hp"
+            [max]="opponentPokemon.maxHp"></progress>
+          <span class="text-lg font-bold">{{opponentPokemon.hp}}/{{opponentPokemon.maxHp}}</span>
+        </div>
+        <span class="text-2xl font-bold text-center">{{opponentPokemon.pokemon.name}}</span>
+      </div>
+    </div>
+    <!-- Ghost card (no opponent) -->
+    <div class="card bg-base-200" *ngIf="!opponentPokemon">
+      <div class="card-body">
+        <div class="w-[475px] h-[475px] flex justify-center items-center">
+          <h1 class="text-9xl">?</h1>
+        </div>
+        <span class="text-2xl font-bold text-center">
+          ? ? ? ? ?
+        </span>
+      </div>
+    </div>
+  </div>
